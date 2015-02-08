@@ -2,7 +2,7 @@
 import os
 import subprocess
 from twisted.internet import protocol,reactor,endpoints
-import SimpleProxyV2 as myProxy
+import SimpleProxy as myProxy
 import threading
 
 class mainServer(protocol.Protocol):
@@ -45,6 +45,10 @@ class mainServer(protocol.Protocol):
 			showClients()
 		elif(message==""):
 			pass
+		elif message == "getdummy":
+			file = open("capfiles/test.txt")
+			rawData = file.read()
+			self.transport.write(rawData)
 		else:
 			self.transport.write("500 Error Unknown Command\n")
 	
@@ -95,6 +99,7 @@ def find(host,port):
 print "################"
 print "# Project 492  #"
 print "################"
+
 
 clients=[]
 endpoints.serverFromString(reactor,"tcp:2222").listen(mainFactory())
