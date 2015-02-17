@@ -46,7 +46,7 @@ class mainServer(protocol.Protocol):
 		elif(message==""):
 			pass
 		elif message == "getdummy":
-			file = open("capfiles/test.txt")
+			file = open("capfiles/test.cap")
 			rawData = file.read()
 			self.transport.write(rawData)
 		else:
