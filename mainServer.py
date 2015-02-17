@@ -3,10 +3,13 @@ import os
 import subprocess
 from twisted.internet import protocol,reactor,endpoints
 import SimpleProxy as myProxy
+import simpleSniffer as mySniffer
 import threading
 
 class mainServer(protocol.Protocol):
 	def dataReceived(self,data):
+		#protec Exception error by assign variable 1st
+		sniffer=None
 		hostIP=str(self.transport.getPeer().host)
 		hostPort=str(self.transport.getPeer().port)
 		#print repr(data)
@@ -19,10 +22,11 @@ class mainServer(protocol.Protocol):
 		if(message=="start" and tempClient["proxy"]!=True):
 			self.transport.write("200 OK Server Start\n")
 			try:
+				#run Proxy for clint
+				self.transport.write("201 Running Proxy OK on port:"+str(port)+"\n")
 				t=threading.Thread(target=myProxy.start,args=(port,))
 				t.daemon=True
 				t.start()
-				self.transport.write("201 Running Proxy OK on port:"+str(port)+"\n")
 				#remove client in clients and replcae with tempClient
 				clients.remove(tempClient)
 				tempClient["proxy"]=True
@@ -31,6 +35,15 @@ class mainServer(protocol.Protocol):
 				self.transport.write("[Error]"+str(e)+"\n")
 		elif(message=="start" and tempClient["proxy"]==True):
 			self.transport.write("202 Proxy Server is running already\n")
+		elif(message=="sniff" and tempClient["proxy"]==True):
+			#start the sniff
+			self.transport.write("204 start sniffing")
+			sniffer=mySniffer.simpleSniffer(tempClient["host"],tempClient["proxy"],"128.199.255.155",tempClient["proxyPort"])
+			t=threading.Thread(target=sniffer.sniff)
+			#result=sniffer.sniff()
+			t.daemon=True
+			t.start()
+			self.transport.write("205 sniffing complete")
 		#client senf "stop" command to stop Proxy+Capture Server
 		elif(message=="stop"):
 			self.transport.write("203 OK Server Stop\n")

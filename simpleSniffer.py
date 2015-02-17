@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from scapy.all import *
 
 class simpleSniffer():
@@ -11,7 +13,8 @@ class simpleSniffer():
 		self.filter += " or (src host "+self.server+" and dst host "+self.client+")"
 
 	def sniff(self):
-		self.pkts=sniff(filter=self.filter,timeout=10)
+		self.pkts=sniff(filter=self.filter)
+		return self.pkts.summary()
 
 	def write(self,filename):
 		wrpcap(filename,self.pkts)
