@@ -2,10 +2,16 @@
 import os
 import subprocess
 from twisted.internet import protocol,reactor,endpoints
-import SimpleProxy as myProxy
+import SimpleProxy
 import simpleSniffer as mySniffer
 import threading
 import multiprocessing
+import sys
+#import mitmProxy
+import proxyWithHttps
+
+from twisted.python import log
+log.startLogging(sys.stdout)
 
 class mainServer(protocol.Protocol):
 
@@ -39,10 +45,15 @@ class mainServer(protocol.Protocol):
 				#t1.daemon=True
 				#t1.start()
 
-				self.p1 = multiprocessing.Process(target=myProxy.start,args=(port,))
-				self.p1.daemon = True
-				self.p1.start()
-				print "start Proxy Pid:"+str(self.p1.pid)
+				#self.p1 = multiprocessing.Process(target=myProxy.start,args=(port,))
+				#self.p1.daemon = True
+				#self.p1.start()
+				
+				#endpoints.serverFromString(reactor,"tcp:"+port).listen(SimpleProxy.ProxyFactory())
+				import twisted.web.http
+				factory = twisted.web.http.HTTPFactory()
+				factory.protocol = proxyWithHttps.ConnectProxy
+				endpoints.serverFromString(reactor,"tcp:"+port).listen(factory)
 
 				#remove client in clients and replcae with tempClient
 				clients.remove(tempClient)
