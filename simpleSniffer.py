@@ -14,8 +14,7 @@ class simpleSniffer():
 		self.filter += " or (src host "+self.server+" and dst host "+self.client+")"
 
 	def sniff(self):
-		self.pkts=sniff(filter=self.filter,prn=lambda x: x.summary())
-		return self.pkts.summary()
+		self.pkts=sniff(filter=self.filter)
 
 	def write(self,filename):
 		wrpcap(filename,self.pkts)

@@ -42,7 +42,6 @@ class mainServer(protocol.Protocol):
 				self.p1 = multiprocessing.Process(target=myProxy.start,args=(port,))
 				self.p1.daemon = True
 				self.p1.start()
-				self.p1.is_alive()
 				print "start Proxy Pid:"+str(self.p1.pid)
 
 				#remove client in clients and replcae with tempClient
@@ -67,10 +66,10 @@ class mainServer(protocol.Protocol):
 			#t2.start()
 
 			self.p2=multiprocessing.Process(target=self.sniffer.sniff)
-			self.p1.daemon = True
+			self.p2.daemon = True
 			self.p2.start()
 			#self.p2.is_alive()
-			
+
 		elif(message=="getsum"):
 			self.transport.write(self.sniffer.summary())
 		#client senf "stop" command to stop Proxy+Capture Server
@@ -81,6 +80,10 @@ class mainServer(protocol.Protocol):
 			tempClient["proxy"]=False
 			clients.append(tempClient)
 			print self.p1.is_alive()
+		elif(message=="stopsniff"):
+			self.transport.write("206 Stop sniffing\n")
+			self.p2.terminate()
+			self.p2.join()
 		elif(message=="exit"):
 			print "999 bye: "+str(hostIP)
 			self.transport.loseConnection()
