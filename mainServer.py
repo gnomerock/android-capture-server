@@ -115,6 +115,7 @@ class mainServer(protocol.Protocol):
 		hostPort=str(self.transport.getPeer().port)
 		tempClient = (c for c in clients if (c["host"] == hostIP and c["port"]==hostPort)).next()
 		clients.remove(tempClient)
+		print hostIP+" is disconnected."
 
 class mainFactory(protocol.Factory):
 	def buildProtocol(self,addr):
