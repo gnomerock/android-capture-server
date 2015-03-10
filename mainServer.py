@@ -7,7 +7,7 @@ import simpleSniffer as mySniffer
 import threading
 import multiprocessing
 import sys
-#import mitmProxy
+
 import proxyWithHttps
 
 from twisted.python import log
@@ -24,15 +24,17 @@ class mainServer(protocol.Protocol):
 		self.p2=None
 
 	def dataReceived(self,data):
-		#protec Exception error by assign variable 1st
-		
+
+		#protect Exception error by assign variable 1st
 		hostIP=str(self.transport.getPeer().host)
 		hostPort=str(self.transport.getPeer().port)
-		#print repr(data)
-		#self.transport.write(data)
+		
+		#find client in the client list
 		tempClient = (c for c in clients if (c["host"] == hostIP and c["port"]==hostPort)).next()
 		port=tempClient["proxyPort"]
 		message = data.strip("\r\n")
+
+
 		#client send "start" command to start Proxy+Capture Server
 		print "[status]recieved message:%s from %s:%s"%(data,hostIP,hostPort)
 		if(message=="start" and tempClient["proxy"]!=True):
@@ -90,7 +92,7 @@ class mainServer(protocol.Protocol):
 			clients.remove(tempClient)
 			tempClient["proxy"]=False
 			clients.append(tempClient)
-			print self.p1.is_alive()
+			
 		elif(message=="stopsniff"):
 			self.transport.write("206 Stop sniffing\n")
 			self.p2.terminate()
