@@ -23,7 +23,7 @@ class simpleSniffer():
 	def summary(self):
 		return str(self.pkts.summary())
 
-	def stop_status(p):
+	def stop_status(self,p):
 		return self.status
 		
 def main():
