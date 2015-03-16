@@ -93,8 +93,8 @@ class mainServer(protocol.Protocol):
 			
 		elif(message=="stopsniff"):
 			self.transport.write("206 Stop sniffing\n")
-			self.sniffer.stop_status=True
-			print str(self.sniffer.pkts)
+			self.sniffer.stop=True
+
 		elif(message=="exit"):
 			print "999 bye: "+str(hostIP)
 			self.transport.loseConnection()
