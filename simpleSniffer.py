@@ -12,15 +12,19 @@ class simpleSniffer():
 		self.serverPort=serverPort
 		self.filter = "(src host "+self.client+" and dst host "+self.server+")"
 		self.filter += " or (src host "+self.server+" and dst host "+self.client+")"
+		self.stop=False
 
 	def sniff(self):
-		self.pkts=sniff(filter=self.filter)
+		self.pkts=sniff(filter=self.filter,stop_filter=self.stop_status)
 
 	def write(self,filename):
 		wrpcap(filename,self.pkts)
 
 	def summary(self):
 		return str(self.pkts.summary())
+
+	def stop_status(p):
+		return self.status
 		
 def main():
 	s=simpleSniffer("127.0.0.1","2222","128.199.255.155","23232")
