@@ -24,7 +24,7 @@ class simpleSniffer():
 		return str(self.pkts.summary())
 
 	def stop_status(self,p):
-		return self.status
+		return self.stop
 		
 def main():
 	s=simpleSniffer("127.0.0.1","2222","128.199.255.155","23232")
