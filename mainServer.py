@@ -75,11 +75,14 @@ class mainServer(protocol.Protocol):
 			#result=sniffer.sniff()
 			#t2.daemon=True
 			#t2.start()
-
-			self.p2=multiprocessing.Process(target=self.sniffer.sniff)
-			self.p2.daemon = True
-			self.p2.start()
+			
+			#self.p2=multiprocessing.Process(target=self.sniffer.sniff)
+			#self.p2.daemon = True
+			#self.p2.start()
 			#self.p2.is_alive()
+			
+			self.sniffer.daemon=True
+			self.sniffer.start()
 
 		elif(message=="getsum"):
 			self.transport.write(self.sniffer.summary())
@@ -92,8 +95,8 @@ class mainServer(protocol.Protocol):
 			clients.append(tempClient)
 			
 		elif(message=="stopsniff"):
+			self.sniffer.join(1)
 			self.transport.write("206 Stop sniffing\n")
-			self.sniffer.stop=True
 
 		elif(message=="exit"):
 			print "999 bye: "+str(hostIP)

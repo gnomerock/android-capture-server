@@ -3,34 +3,35 @@
 from scapy.all import *
 import threading
 
-class simpleSniffer():
+class simpleSniffer(threading.Thread):
 	
 	def __init__(self,client,clientPort,server,serverPort):
+		threading.Thread.__init__(self)
 		self.client=client
 		self.server=server
 		self.clientPort=clientPort
 		self.serverPort=serverPort
 		self.filter = "(src host "+self.client+" and dst host "+self.server+")"
 		self.filter += " or (src host "+self.server+" and dst host "+self.client+")"
-		self.stop=False
+		self.pkts=[]
 
-	def sniff(self):
-		self.pkts=sniff(filter=self.filter,stop_filter=self.stop_status)
+	def run(self):
+		self.pkts=sniff(filter=self.filter,prn=lambda x:self.pkts.append(x))
 
-	def write(self,filename):
-		wrpcap(filename,self.pkts)
+	#def write(self,filename):
+	#	wrpcap(filename,self.pkts)
 
 	def summary(self):
-		return str(self.pkts.summary())
+		summary=""
+		for pkt in self.pkts:
+			summary+=str(pkt.summary())+"\n"
+		return summary
 
-	def stop_status(self,p):
-		return self.stop
-		
 def main():
 	s=simpleSniffer("127.0.0.1","2222","128.199.255.155","23232")
 	print "debug filter"
 	print str(s.filter)
-	s.sniff()
+	#s.sniff()
 
 if __name__=="__main__":
 	main()
