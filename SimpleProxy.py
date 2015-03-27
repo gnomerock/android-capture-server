@@ -15,7 +15,8 @@ def start(port):
 	print "Proxy Server is running on port: "+str(port)
 
 def main():
-	start(999)
+	reactor.listenTCP(999,ProxyFactory())
+	reactor.run(installSignalHandlers=False)
 
 if __name__=="__main__":
 	main()
