@@ -127,7 +127,9 @@ class mainFactory(protocol.Factory):
 		client={'host':None,'port':None,'proxyPort':None,'proxy':False}
 		client['host']=str(addr.host)
 		client['port']=str(addr.port)
-		client['proxyPort']=str(get_open_port())
+		#i commend line below for making static proxy 
+		#client['proxyPort']=str(get_open_port())
+		client['proxyPort']="23232"
 		clients.append(client)
 		#print str(clients)
 		print "[status]"+str(client['proxyPort'])+" is open for "+str(client['host'])
