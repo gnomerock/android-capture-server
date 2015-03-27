@@ -17,7 +17,7 @@ def start(port):
 def main():
 	start(999)
 
-if __name__="__main__":
+if __name__=="__main__":
 	main()
 
 
