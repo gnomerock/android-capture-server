@@ -14,4 +14,10 @@ def start(port):
 	#reactor.run(installSignalHandlers=False)
 	print "Proxy Server is running on port: "+str(port)
 
+def main():
+	start(999)
+
+if __name__="__main__":
+	main()
+
 
