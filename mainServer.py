@@ -84,7 +84,7 @@ class mainServer(protocol.Protocol):
 			self.sniffer.daemon=True
 			self.sniffer.start()
 
-		elif(message=="getsum"):
+		elif(message.strip()=="getsum"):
 			self.transport.write(self.sniffer.summary())
 		#client senf "stop" command to stop Proxy+Capture Server
 		elif(message=="stop"):
