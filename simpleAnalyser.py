@@ -8,5 +8,7 @@ class simpleAnalyser():
 	def payload2dict(self,payload):
 		#split payload string into multiple line
 		lines = payload.split("\r\n")
+		result = lines
+		return result
 		
 
