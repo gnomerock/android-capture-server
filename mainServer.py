@@ -39,17 +39,17 @@ class mainServer(protocol.Protocol):
 
 		#Checking Message from CLients
 		#Start
-		if(message=="start" and tempClient["proxy"]!=True):
+		if(message.strip()=="start" and tempClient["proxy"]!=True):
 			self.transport.write("200 OK Server Start\n")
 			try:
 				#run Proxy for client
 				self.transport.write("201 Running Proxy OK on port:"+str(port)+"\n")
 
 				#Create Proxy Sevice and listen to the port that send to client
-				import twisted.web.http
-				factory = twisted.web.http.HTTPFactory()
-				factory.protocol = proxyWithHttps.ConnectProxy
-				endpoints.serverFromString(reactor,"tcp:"+port).listen(factory)
+				#import twisted.web.http
+				#factory = twisted.web.http.HTTPFactory()
+				#factory.protocol = proxyWithHttps.ConnectProxy
+				#endpoints.serverFromString(reactor,"tcp:"+port).listen(factory)
 
 				#Change proxy status of client
 				clients.remove(tempClient)
@@ -60,11 +60,11 @@ class mainServer(protocol.Protocol):
 				self.transport.write("[Error]"+str(e)+"\n")
 
 		#Start
-		elif(message=="start" and tempClient["proxy"]==True):
+		elif(message.strip()=="start" and tempClient["proxy"]==True):
 			self.transport.write("202 Proxy Server is running already\n")
 
 		#sniff command to start sniffing
-		elif(message=="sniff" and tempClient["proxy"]==True):
+		elif(message.strip()=="sniff" and tempClient["proxy"]==True):
 
 			#start the sniff
 			self.transport.write("204 start sniffing"+"\n")
@@ -87,21 +87,21 @@ class mainServer(protocol.Protocol):
 		elif(message.strip()=="getsum"):
 			self.transport.write(self.sniffer.summary())
 		#client senf "stop" command to stop Proxy+Capture Server
-		elif(message=="stop"):
+		elif(message.strip()=="stop"):
 			self.transport.write("203 OK Server Stop\n")
 			#change tempClient proxy status to False and replace in clients
 			clients.remove(tempClient)
 			tempClient["proxy"]=False
 			clients.append(tempClient)
 			
-		elif(message=="stopsniff"):
+		elif(message.strip()=="stopsniff"):
 			self.sniffer.join(1)
 			self.transport.write("206 Stop sniffing\n")
 
-		elif(message=="exit"):
+		elif(message.strip()=="exit"):
 			print "999 bye: "+str(hostIP)
 			self.transport.loseConnection()
-		elif(message=="dbg"):
+		elif(message.strip()=="dbg"):
 			showClients()
 		elif(message==""):
 			pass
