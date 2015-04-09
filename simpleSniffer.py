@@ -35,8 +35,8 @@ class simpleSniffer(threading.Thread):
 		#set new stdout
 		old_stdout = sys.stdout
 		sys.stdout = mystdout = StringIO()
-		
-		result=str(ls(self.pkts[index]))
+		ls(self.pkts[index])
+		result=sys.stdout
 		#return to old stdout
 		sys.stdout = old_stdout
 		return result
