@@ -112,8 +112,9 @@ class mainServer(protocol.Protocol):
 		#get detail each  packet by packetIndex
 		elif message[0:3] == "sum":
 			index = message.strip("sum")
-			returnMeassage=int(self.sniffer.getPktDetail(index))
-			self.transport.write(returnMeassage)
+			returnMessage=int(self.sniffer.getPktDetail(index))
+			print returnMessage
+			self.transport.write(returnMessage)
 		else:
 			self.transport.write("500 Error Unknown Command\n")
 	
