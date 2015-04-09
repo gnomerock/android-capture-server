@@ -33,12 +33,12 @@ class simpleSniffer(threading.Thread):
 		import sys
 		#ls() print to stdout, so we need to redirect result from stdout to variable
 		#set new stdout
-		old_stdout = sys.stdout
-		sys.stdout = mystdout = StringIO()
+		mystdout=StringIO()
+		save_stdout = sys.stdout
+		sys.stdout = mystdout
 		ls(self.pkts[index])
-		result=sys.stdout
-		#return to old stdout
-		sys.stdout = old_stdout
+		result=mystdout.getvalue()
+		sys.stdout = save_stdout
 		return result
 
 
