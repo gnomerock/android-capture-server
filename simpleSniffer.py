@@ -29,7 +29,16 @@ class simpleSniffer(threading.Thread):
 		return summary
 
 	def getPktDetail(self,index):
+		from cStringIO import StringIO
+		import sys
+		#ls() print to stdout, so we need to redirect result from stdout to variable
+		#set new stdout
+		old_stdout = sys.stdout
+		sys.stdout = mystdout = StringIO()
+		
 		result=str(ls(self.pkts[index]))
+		#return to old stdout
+		sys.stdout = old_stdout
 		return result
 
 
