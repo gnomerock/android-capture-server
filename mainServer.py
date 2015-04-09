@@ -114,7 +114,6 @@ class mainServer(protocol.Protocol):
 			index = int(message.strip("sum"))
 			print str(index)+" type: "+str(type(index))
 			returnMessage=self.sniffer.getPktDetail(index)
-			
 			self.transport.write(returnMessage)
 		else:
 			self.transport.write("500 Error Unknown Command\n")
