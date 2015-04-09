@@ -109,6 +109,11 @@ class mainServer(protocol.Protocol):
 			file = open("capfiles/test.cap")
 			rawData = file.read()
 			self.transport.write(rawData)
+		#get detail each  packet by packetIndex
+		elif message[0:3] == "sum":
+			index = message.strip("sum")
+			returnMeassage=self.sniffer.getPktDetail(index)
+			self.transport.write(returnMeassage)
 		else:
 			self.transport.write("500 Error Unknown Command\n")
 	

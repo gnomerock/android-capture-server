@@ -28,6 +28,10 @@ class simpleSniffer(threading.Thread):
 		summary+="END\n"
 		return summary
 
+	def getPktDetail(self,index):
+		return self.pkts[index].show()
+
+
 def main():
 	s=simpleSniffer("127.0.0.1","2222","128.199.255.155","23232")
 	print "debug filter"
