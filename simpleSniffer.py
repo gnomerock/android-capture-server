@@ -29,7 +29,15 @@ class simpleSniffer(threading.Thread):
 		return summary
 
 	def getPktDetail(self,index):
+		
 		return self.pkts[index].show()
+
+
+def expand(x):
+	yield x
+	while x.payload:
+		x=x.payload
+		yield x
 
 
 def main():
