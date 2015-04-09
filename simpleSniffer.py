@@ -29,7 +29,7 @@ class simpleSniffer(threading.Thread):
 		return summary
 
 	def getPktDetail(self,index):
-		result=ls(pkts[index])
+		result=ls(self.pkts[index])
 		return result
 
 
