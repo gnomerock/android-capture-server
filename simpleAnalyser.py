@@ -19,5 +19,25 @@ class simpleAnalyser():
 			result[k]=v
 		#result = lines
 		return result
-		
+	
+	def getHostList(self,pkts):
+		hostList=[]
+		portList=[]
+		for pkt in pkts:
+			#check host is contain in list or not?
+			#if not, append to the list
+
+			#using try for avoid no key exception
+			try:
+				host = self.payload2dict(pkt.load)['host']
+				port = pkt.sport
+			except:
+				pass
+
+			if host not in hostList:
+				hostList.append(host)
+				portList.append(port)
+
+		return hostList,portList
+
 

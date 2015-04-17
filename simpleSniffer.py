@@ -39,7 +39,7 @@ class simpleSniffer(threading.Thread):
 		ls(self.pkts[index])
 		result=mystdout.getvalue()
 		sys.stdout = save_stdout
-		result+="\nEND"
+		result+="END"
 		return result
 
 
