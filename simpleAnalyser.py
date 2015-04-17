@@ -31,15 +31,27 @@ class simpleAnalyser():
 			try:
 				pkt.load
 				host = self.payload2dict(pkt.load)['Host']
-				print "1+"+host
 				port = pkt.sport
 			except:
 				continue
-			print "2+"+host
+
 			if host not in hostList:
 				hostList.append(host)
 				portList.append(port)
 
 		return hostList,portList
+
+	def printHostList(self,hosts,ports):
+
+		if type(hosts) == type([]):
+			return 1
+		if type(ports) == type([]):
+			return 1
+
+		for index in len(hosts):
+			result+=hosts[index]+"\t"+ports[index]+"\n"
+
+		result+="END"
+		return result
 
 
