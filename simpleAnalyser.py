@@ -42,7 +42,7 @@ class simpleAnalyser():
 		return hostList,portList
 
 	def printHostList(self,hosts,ports):
-
+		result=""
 		for index in range(len(hosts)):
 			result+=hosts[index]+"\t"+ports[index]+"\n"
 
