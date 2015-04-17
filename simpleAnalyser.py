@@ -30,8 +30,8 @@ class simpleAnalyser():
 			#using try for avoid no key exception
 			try:
 				pkt.load
-				print "1+"+host
 				host = self.payload2dict(pkt.load)['Host']
+				print "1+"+host
 				port = pkt.sport
 			except:
 				continue
