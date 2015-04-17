@@ -30,11 +30,12 @@ class simpleAnalyser():
 			#using try for avoid no key exception
 			try:
 				pkt.load
+				print "1+"+host
 				host = self.payload2dict(pkt.load)['Host']
 				port = pkt.sport
 			except:
 				continue
-
+			print "2+"+host
 			if host not in hostList:
 				hostList.append(host)
 				portList.append(port)
