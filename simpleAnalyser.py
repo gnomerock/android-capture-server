@@ -23,7 +23,7 @@ class simpleAnalyser():
 	def getHostList(self,pkts):
 		hostList=[]
 		portList=[]
-		for pkt in pkts:
+		for pkt in pkts[1:]:
 			#check host is contain in list or not?
 			#if not, append to the list
 
@@ -33,7 +33,7 @@ class simpleAnalyser():
 				host = self.payload2dict(pkt.load)['host']
 				port = pkt.sport
 			except:
-				pass
+				continue
 
 			if host not in hostList:
 				hostList.append(host)
