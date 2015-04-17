@@ -64,7 +64,7 @@ class mainServer(protocol.Protocol):
 			self.transport.write("202 Proxy Server is running already\n")
 
 		#sniff command to start sniffing
-		elif(message.strip()=="sniff" and tempClient["proxy"]==True):
+		elif(message.strip()=="sniff" ):
 
 			#start the sniff
 			self.transport.write("204 start sniffing"+"\n")
