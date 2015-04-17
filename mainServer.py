@@ -171,6 +171,11 @@ print "################"
 
 
 clients=[]
+#Create Proxy Sevice and listen to the port that send to client
+import twisted.web.http
+factory = twisted.web.http.HTTPFactory()
+factory.protocol = proxyWithHttps.ConnectProxy
+endpoints.serverFromString(reactor,"tcp:999").listen(factory)
 endpoints.serverFromString(reactor,"tcp:2222").listen(mainFactory())
 reactor.run()
 
