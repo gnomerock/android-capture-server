@@ -43,11 +43,6 @@ class simpleAnalyser():
 
 	def printHostList(self,hosts,ports):
 
-		if type(hosts) == type([]):
-			return 1
-		if type(ports) == type([]):
-			return 1
-
 		for index in len(hosts):
 			result+=hosts[index]+"\t"+ports[index]+"\n"
 
