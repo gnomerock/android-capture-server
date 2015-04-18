@@ -45,7 +45,7 @@ class simpleSniffer(threading.Thread):
 	def filterByDstPort(self,port):
 		result = []
 		for pkt in self.pkts:
-			print str(pkt.dport)
+			#print str(pkt.dport)
 			if pkt.dport == port:
 				result.append(pkt)
 		return result
