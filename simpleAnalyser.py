@@ -13,7 +13,7 @@ class simpleAnalyser():
 		#split each line in the list into lists of key-value
 		for line in lines:
 			kv=line.split(" ",1)
-			k=kv[0].strip(":")
+			k=kv[0].strip(":").lower()
 			v=kv[1]
 			#add into result
 			result[k]=v
@@ -30,7 +30,7 @@ class simpleAnalyser():
 			#using try for avoid no key exception
 			try:
 				pkt.load
-				host = self.payload2dict(pkt.load)['Host']
+				host = self.payload2dict(pkt.load)['host']
 				port = pkt.sport
 			except:
 				continue
