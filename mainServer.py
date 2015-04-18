@@ -122,6 +122,12 @@ class mainServer(protocol.Protocol):
 			(h,p) = self.analyser.getHostList(self.sniffer.pkts)
 			result = self.analyser.printHostList(h,p)
 			self.transport.write(str(result))
+		#Filter by dst port
+		elif message[0:4] == "port":
+			portNumber = int(message.strip("port"))
+			pkts = self.sniffer.filterByDstPort(portNumber)
+			returnMessage=self.sniffer.printSumOf(pkts)
+			self.transport.write(returnMessage)
 		else:
 			self.transport.write("500 Error Unknown Command\n")
 	

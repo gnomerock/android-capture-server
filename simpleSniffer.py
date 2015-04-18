@@ -42,6 +42,20 @@ class simpleSniffer(threading.Thread):
 		result+="END\n"
 		return result
 
+	def filterByDstPort(self,port):
+		result = []
+		for pkt in self.pkts:
+			if pkt.dst == port:
+				result.append(pkt)
+		return result
+
+	def printSumOf(self,pkts):
+		summary=""
+		for pkt in pkts:
+			summary+=str(pkt.summary())+"\n"
+		summary+="END\n"
+		return summary
+
 
 def main():
 	s=simpleSniffer("127.0.0.1","2222","128.199.255.155","23232")
