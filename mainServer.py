@@ -119,7 +119,8 @@ class mainServer(protocol.Protocol):
 			self.transport.write(returnMessage)
 		#analyser
 		elif(message.strip()=="gethosts"):
-			result = self.analyser.printHostList(self.sniffer.pkts)
+			(h,p) = self.analyser.getHostList(self.sniffer.pkts)
+			result = self.analyser.printHostList(h,p)
 			self.transport.write(str(result))
 		else:
 			self.transport.write("500 Error Unknown Command\n")
