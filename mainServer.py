@@ -4,6 +4,7 @@ import subprocess
 from twisted.internet import protocol,reactor,endpoints
 import SimpleProxy
 import simpleSniffer as mySniffer
+import simpleAnalyser as myAnalyser
 import threading
 import multiprocessing
 import sys
@@ -22,6 +23,7 @@ class mainServer(protocol.Protocol):
 		self.t2=None
 		self.p1=None
 		self.p2=None
+		self.analyser=myAnalyser()
 
 	def dataReceived(self,data):
 
@@ -115,6 +117,10 @@ class mainServer(protocol.Protocol):
 			print str(index)+" type: "+str(type(index))
 			returnMessage=self.sniffer.getPktDetail(index)
 			self.transport.write(returnMessage)
+		#analyser
+		elif(message.strip()=="gethosts"):
+			result = self.analyser.printHostList(self.mySniffer.pkts)
+			self.transport.write(str(result))
 		else:
 			self.transport.write("500 Error Unknown Command\n")
 	
