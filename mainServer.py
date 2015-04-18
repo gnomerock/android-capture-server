@@ -23,7 +23,7 @@ class mainServer(protocol.Protocol):
 		self.t2=None
 		self.p1=None
 		self.p2=None
-		self.analyser=myAnalyser()
+		self.analyser=myAnalyser.simpleAnalyser()
 
 	def dataReceived(self,data):
 
