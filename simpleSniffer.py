@@ -27,7 +27,7 @@ class simpleSniffer(threading.Thread):
 	def summary(self):
 		summary=""
 		for pkt in self.pkts:
-			summary+=str(pkt.summary())+" "+self.getColorCode(pkt)+"\n"
+			summary+=str(pkt.summary())+" "+str(self.getColorCode(pkt))+"\n"
 		summary+="END\n"
 		return summary
 
