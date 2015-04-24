@@ -69,7 +69,7 @@ class simpleSniffer(threading.Thread):
 			data = self.analyser.payload2dict(pkt.load)
 		except:
 			return 3
-		print data
+		#print data
 		#HTTP
 		if 'get' in data:
 			return 1
