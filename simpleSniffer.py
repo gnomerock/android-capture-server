@@ -2,6 +2,7 @@
 
 from scapy.all import *
 import threading
+import simpleAnalyser as myAnalyser
 
 class simpleSniffer(threading.Thread):
 	
@@ -15,6 +16,8 @@ class simpleSniffer(threading.Thread):
 		self.filter += " or (src host "+self.server+" and dst host "+self.client+")"
 		self.pkts=[]
 
+		self.analyser=myAnalyser.simpleAnalyser()
+
 	def run(self):
 		self.pkts=sniff(filter=self.filter,prn=lambda x:self.pkts.append(x))
 
@@ -24,7 +27,7 @@ class simpleSniffer(threading.Thread):
 	def summary(self):
 		summary=""
 		for pkt in self.pkts:
-			summary+=str(pkt.summary())+"\n"
+			summary+=str(pkt.summary())+" "+getColorCode(pkt)+"\n"
 		summary+="END\n"
 		return summary
 
@@ -56,6 +59,20 @@ class simpleSniffer(threading.Thread):
 			summary+=str(pkt.summary())+"\n"
 		summary+="END\n"
 		return summary
+
+	def getColorCode(self,pkt):
+		#1 for http
+		#2 for https
+		#3 for tcp
+		try:
+			data = self.analyser.payload2dict(pkt.load)
+		except:
+			return 3
+		#HTTP
+		if "get" in data:
+			return 1
+		if "connect" in data:
+			return 2
 
 
 def main():
