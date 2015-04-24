@@ -64,6 +64,7 @@ class simpleSniffer(threading.Thread):
 		#1 for http
 		#2 for https
 		#3 for tcp
+		#otherwise
 		try:
 			data = self.analyser.payload2dict(pkt.load)
 		except:
@@ -73,8 +74,10 @@ class simpleSniffer(threading.Thread):
 		if 'get' in data:
 			return 1
 		#HTTPS
-		if 'connect' in data:
+		elif 'connect' in data:
 			return 2
+		else:
+			return 4
 
 
 def main():
