@@ -178,9 +178,9 @@ def find(host,port):
 	result = (c for c in clients if (c["host"]==host and c["port"]==port)).next()
 
 
-print "################"
-print "# Project 492  #"
-print "################"
+print "#################################"
+print "# Android Capture&Proxy Server  #"
+print "#################################"
 
 
 clients=[]
