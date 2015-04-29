@@ -115,8 +115,11 @@ class mainServer(protocol.Protocol):
 		elif message[0:3] == "sum":
 			index = int(message.strip("sum"))
 			print str(index)+" type: "+str(type(index))
-			returnMessage=self.sniffer.getPktDetail(index)
-			self.transport.write(returnMessage)
+			try:
+				returnMessage=self.sniffer.getPktDetail(index)
+				self.transport.write(returnMessage)
+			except:
+				self.transport.write("some error happened.")
 		#analyser
 		elif(message.strip()=="gethosts"):
 			(h,p) = self.analyser.getHostList(self.sniffer.pkts)
@@ -125,8 +128,8 @@ class mainServer(protocol.Protocol):
 		#Filter by dst port
 		elif message[0:4] == "port":
 			portNumber = int(message.strip("port"))
-			pkts = self.sniffer.filterByDstPort(portNumber)
-			returnMessage=self.sniffer.printSumOf(pkts)
+			(pkts,indexes) = self.sniffer.filterByDstPort(portNumber)
+			returnMessage=self.sniffer.printSumOf(pkts,indexes)
 			self.transport.write(returnMessage)
 		else:
 			self.transport.write("500 Error Unknown Command\n")
