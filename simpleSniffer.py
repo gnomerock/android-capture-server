@@ -47,16 +47,20 @@ class simpleSniffer(threading.Thread):
 
 	def filterByDstPort(self,port):
 		result = []
+		indexes = []
+		index=0
 		for pkt in self.pkts:
 			#print str(pkt.dport)
 			if pkt.dport == port:
 				result.append(pkt)
-		return result
+				indexes.append(index)
+			index++
+		return result,indexes
 
-	def printSumOf(self,pkts):
+	def printSumOf(self,pkts,indexes):
 		summary=""
-		for pkt in pkts:
-			summary+=str(pkt.summary())+"\n"
+		for pkt,index in zip(pkts,indexes):
+			summary+=str(pkt.summary())+" "+str(index)+"\n"
 		summary+="END\n"
 		return summary
 
