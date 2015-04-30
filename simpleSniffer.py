@@ -54,7 +54,7 @@ class simpleSniffer(threading.Thread):
 			if pkt.dport == port:
 				result.append(pkt)
 				indexes.append(index)
-			index++
+			index=index+1
 		return result,indexes
 
 	def printSumOf(self,pkts,indexes):
