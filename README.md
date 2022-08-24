@@ -1,4 +1,4 @@
-# android-capture-sever
+# android-capture-server
 packet capture service provide to android (connect though proxy)
 
 ## dependencies
